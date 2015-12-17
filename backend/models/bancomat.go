@@ -3,16 +3,16 @@ package models
 import (
 	"github.com/GoogleCloudPlatform/go-endpoints/endpoints"
 	"golang.org/x/net/context"
+	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 )
 
 // Bancomat represents an ATM in
 // the datastore.
 type Bancomat struct {
-	Key       *datastore.Key `json:"id" datastore:"-"`
-	Longitude float32        `json:"longitude" datastore:"longitude"`
-	Latitude  float32        `json:"latitude" datastore:"latitude"`
-	BankKey   *datastore.Key `datastore:"bankKey"`
+	Key      *datastore.Key     `json:"id" datastore:"-"`
+	Location appengine.GeoPoint `datastore:"location"`
+	BankKey  *datastore.Key     `datastore:"bankKey"`
 }
 
 // BancomatListReq is the request type for BancomatService.List.
@@ -27,9 +27,9 @@ type BancomatList struct {
 
 // BancomatAddReq is the request type for adding request.
 type BancomatAddReq struct {
-	BankKey   string  `json:"bank_id" endpoints:"req"`
-	Longitude float32 `json:"longitude" endpoints:"req"`
-	Latitude  float32 `json:"latitude" endpoints:"req"`
+	BankKey   string  `json:"bank_id"`
+	Longitude float64 `json:"longitude"`
+	Latitude  float64 `json:"latitude"`
 }
 
 // BancomatService offers operations to add and list bancomat
@@ -55,10 +55,9 @@ func (s *BancomatService) List(c context.Context, r *BancomatListReq) (*Bancomat
 
 func (s *BancomatService) Add(c context.Context, r *BancomatAddReq) error {
 	k := datastore.NewIncompleteKey(c, "Bancomat", nil)
-	b := &Bancomat{
-		Longitude: r.Longitude,
-		Latitude:  r.Latitude,
-	}
+
+	location := appengine.GeoPoint{Lat: r.Latitude, Lng: r.Longitude}
+	b := &Bancomat{Location: location}
 
 	_, err := datastore.Put(c, k, b)
 	return err
@@ -69,15 +68,6 @@ func RegisterBancomatService() (*endpoints.RPCService, error) {
 
 	api := &BancomatService{}
 
-	rpcService, err := endpoints.RegisterService(api,
+	return endpoints.RegisterService(api,
 		"bancomat", "v1", "Bancomat Service", true)
-
-	if err != nil {
-		return nil, err
-	}
-
-	info := rpcService.MethodByName("List").Info()
-	info.Path, info.HTTPMethod, info.Name = "bancomats", "GET", "bancomat.list"
-
-	return rpcService, nil
 }

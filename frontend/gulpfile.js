@@ -3,7 +3,9 @@ var gulp = require('gulp'),
     sass = require('gulp-ruby-sass'),
     open = require('gulp-open'),
     concat = require("gulp-concat"),
-    uglify = require('gulp-uglify');
+    uglify = require('gulp-uglify'),
+    inject = require('gulp-inject')
+    mainBowerFiles = require('main-bower-files');
 
 
 // Styles
@@ -14,9 +16,16 @@ gulp.task('process-styles', function(){
      .pipe(connect.reload());
 });
 
-// Slim
-gulp.task('process-html', function(){
-    return gulp.src('index.html')
+// HTML
+gulp.task('move-html', function(){
+  return gulp.src('index.html')
+        .pipe(gulp.dest('./dist'));
+});
+gulp.task('process-html', ['process-scripts','move-html'], function(){
+    return gulp.src('./dist/index.html')
+    .pipe(inject(
+      gulp.src(mainBowerFiles(), {read: false}),
+                 {ignorePath: 'dist', addRootSlash: false, name: 'bower'}))
           .pipe(gulp.dest('./dist'))
           .pipe(connect.reload());
 });
@@ -25,13 +34,14 @@ gulp.task('process-html', function(){
 gulp.task('process-scripts', function(){
     return gulp.src('app/javascript/**/*.js')
           .pipe(concat('app.js'))
-          .pipe(uglify())
+          //.pipe(uglify())
           .pipe(gulp.dest('./dist/javascript'))
           .pipe(connect.reload());
 });
 //Server
 gulp.task('serve', function(){
   connect.server({
+    root: './dist',
     port: 8888,
     livereload: true
   });
@@ -44,8 +54,8 @@ gulp.task('open', function(){
 });
 
 gulp.task('watch', function(){
-    gulp.watch(['./*.html'], ['html']);
+    gulp.watch(['./*.html'], ['process-html']);
     gulp.watch(['./app/sass/*.scss'], ['process-styles']);
 });
 
-gulp.task('default',['serve', 'watch', 'open']);
+gulp.task('default',['serve', 'process-html', 'watch', 'open']);

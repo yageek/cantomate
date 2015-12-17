@@ -1,0 +1,26 @@
+{
+  "name": "cantomate-frontend",
+  "homepage": "https://github.com/yageek/cantomate",
+  "authors": [
+    "yageek <yannick.heinrich@gmail.com>"
+  ],
+  "description": "The frontend of the cantomate frontend",
+  "main": "index.html",
+  "moduleType": [],
+  "keywords": [
+    "cantomate",
+    "frontend"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "~1.0.0"
+  }
+}

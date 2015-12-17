@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" >
+  <head>
+    <title>Angular Material - Starter App</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
+    <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:400,500,700,400italic'>
+    <link rel="stylesheet" href="./bower_components/angular-material/angular-material.css"/>
+    <link rel="stylesheet" href="./app/css/main.css"/>
+  </head>
+
+
+  <script type="text/javascript">
+
+      function appStart(){
+        var ROOT = 'http://localhost:8080/_ah/api';
+        gapi.client.load('banks', 'v1', function() {
+
+        gapi.client.banks.list().then(function(response){
+
+
+            console.log("Response:", response.result);
+        }, function(reason){
+          console.console.log("Reason:", reason);
+
+        });
+}, ROOT);
+      };
+  </script>
+    <body ng-app="starterApp" layout="column"  ng-controller="EmployeeController as employeeController">
+
+    <!-- Container #1 (see wireframe) -->
+   <md-toolbar layout="row">
+      <md-button class="menu" hide-gt-sm ng-click="employeeController.toggleUsersList()">
+        <md-icon md-svg-icon="menu" ></md-icon>
+      </md-button>
+      <h1>Angular Material - Star App</h1>
+    </md-toolbar>
+
+    <!-- Container #2 -->
+    <div flex layout="row">
+
+        <!-- Container #3 -->
+
+        <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" md-component-id="left">
+
+          <!-- User list #3 -->
+          <md-list>
+
+            <md-item ng-repeat="employee in employeeController.employees">
+              <md-button ng-click="employeeController.selectEmployee(employee)"ng-class="{'selected' : employee === employeeController.selected }">
+                  <md-icon md-svg-src="assets/svg/{{employee.avatar}}.svg" class="avatar"></md-icon>
+                  {{employee.name}}
+                </md-button>
+            </md-item>
+
+          </md-list>
+
+        </md-sidenav>
+
+        <!-- Container #4 -->
+        <md-content flex id="content">
+               <md-icon md-svg-icon="assets/svg/{{employeeController.selected.avatar}}.svg" class="avatar"></md-icon>
+          <h2>{{employeeController.selected.name}}</h2>
+          <p>{{employeeController.selected.content}}</p>
+
+          <md-button class="share" md-no-ink ng-click="employeeController.share($event)">
+            <md-icon md-svg-icon="share" ></md-icon>
+          </md-button>
+        </md-content>
+
+    </div>
+    <script src="https://apis.google.com/js/client.js?onload=appStart"></script>
+    <script src="./bower_components/angular/angular.js" type="text/javascript" ></script>
+    <script src="./bower_components/angular-animate/angular-animate.js" type="text/javascript" ></script>
+    <script src="./bower_components/angular-aria/angular-aria.js" type="text/javascript" ></script>
+    <script src="./bower_components/angular-material/angular-material.js" type="text/javascript" ></script>
+
+     <!-- Load App Logic -->
+    <script src="./app/src/employees/Employees.js"></script>
+    <script src="./app/src/employees/EmployeeService.js"></script>
+    <script src="./app/src/employees/EmployeeController.js"></script>
+
+
+  <script type="text/javascript">
+      angular
+          .module('starterApp', [ 'ngMaterial' , 'employees'])
+          .config(function( $mdIconProvider , $mdThemingProvider){
+              // Register the user `avatar` icons
+              $mdIconProvider
+                      .defaultIconSet("./assets/svg/avatars.svg", 128)
+                      .icon("menu", "./assets/svg/menu.svg", 24)
+                      .icon("share", "./assets/svg/share.svg", 24);
+
+             $mdThemingProvider.theme('default')
+              .primaryPalette('brown')
+              .accentPalette('red');
+
+          })
+          .run(function($log){
+            $log.debug("startApp + ngMaterial running ");
+          });
+    </script>
+
+  </body>
+</html>

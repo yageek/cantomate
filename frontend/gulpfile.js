@@ -31,8 +31,14 @@ gulp.task('process-html', ['process-scripts','move-html'], function(){
 });
 
 // Javascript
+//
+var appFiles = [
+  'app/javascript/employees/Employees.js',
+  'app/javascript/employees/EmployeeController.js',
+  'app/javascript/employees/EmployeeService.js',
+              ]
 gulp.task('process-scripts', function(){
-    return gulp.src('app/javascript/**/*.js')
+    return gulp.src(appFiles)
           .pipe(concat('app.js'))
           //.pipe(uglify())
           .pipe(gulp.dest('./dist/javascript'))

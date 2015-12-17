@@ -1,23 +1,34 @@
 var gulp = require('gulp'),
     connect = require('gulp-connect'),
     sass = require('gulp-ruby-sass'),
-    open = require('gulp-open');
+    open = require('gulp-open'),
+    concat = require("gulp-concat"),
+    uglify = require('gulp-uglify');
 
 
-//Sass
+// Styles
 gulp.task('process-styles', function(){
   return sass('app/sass/*.scss')
      .on('error', sass.logError)
-     .pipe(gulp.dest('app/css'))
+     .pipe(gulp.dest('dist/css'))
      .pipe(connect.reload());
 });
 
-// html
-gulp.task('html', function(){
-    return gulp.src('./*.html')
+// Slim
+gulp.task('process-html', function(){
+    return gulp.src('index.html')
+          .pipe(gulp.dest('./dist'))
           .pipe(connect.reload());
 });
 
+// Javascript
+gulp.task('process-scripts', function(){
+    return gulp.src('app/javascript/**/*.js')
+          .pipe(concat('app.js'))
+          .pipe(uglify())
+          .pipe(gulp.dest('./dist/javascript'))
+          .pipe(connect.reload());
+});
 //Server
 gulp.task('serve', function(){
   connect.server({
@@ -25,8 +36,8 @@ gulp.task('serve', function(){
     livereload: true
   });
 });
-// Open browser
 
+// Open browser
 gulp.task('open', function(){
   gulp.src('./index.html')
   .pipe(open({uri: 'http://localhost:8888'}));

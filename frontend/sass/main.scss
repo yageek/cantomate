@@ -1,3 +1,6 @@
+
+
+
 html, body {
   font-family: 'Roboto', sans-serif;
   font-size:14px;
@@ -9,7 +12,7 @@ html, body {
 /* Toolbar area */
 
 .menu {
-  background-color: transparent;
+  background-color: red;
   border: none;
   height: 38px;
   margin: 16px;
@@ -97,11 +100,11 @@ md-button.menuBtn > md-icon {
   position: relative;
 }
 
-/* Typography support coming in 0.8.0 */
+/* Typo  graphy support coming in 0.8.0 */
 
 md-toolbar h1 {
   font-size: 1.250em;
-  font-weight: 400;
+  font-weight: 300;
 }
 
 .avatar {

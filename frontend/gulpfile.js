@@ -10,7 +10,7 @@ var gulp = require('gulp'),
 
 // Styles
 gulp.task('process-styles', function(){
-  return sass('app/sass/*.scss')
+  return sass('sass/*.scss')
      .on('error', sass.logError)
      .pipe(gulp.dest('dist/css'))
      .pipe(connect.reload());
@@ -33,9 +33,7 @@ gulp.task('process-html', ['process-scripts','move-html'], function(){
 // Javascript
 //
 var appFiles = [
-  'app/javascript/employees/Employees.js',
-  'app/javascript/employees/EmployeeController.js',
-  'app/javascript/employees/EmployeeService.js',
+  'app/javascript/banks/Banks.js'
               ]
 gulp.task('process-scripts', function(){
     return gulp.src(appFiles)
@@ -61,7 +59,7 @@ gulp.task('open', function(){
 
 gulp.task('watch', function(){
     gulp.watch(['./*.html'], ['process-html']);
-    gulp.watch(['./app/sass/*.scss'], ['process-styles']);
+    gulp.watch(['./sass/*.scss'], ['process-styles']);
 });
 
 gulp.task('default',['serve', 'process-html', 'watch', 'open']);

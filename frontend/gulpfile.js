@@ -15,13 +15,19 @@ gulp.task('process-styles', function(){
      .pipe(gulp.dest('dist/css'))
      .pipe(connect.reload());
 });
+// Assets
+gulp.task('copy-assets', function(){
+  return gulp.src('./assets/**/*')
+        .pipe(gulp.dest('./dist/assets'));
+});
 
 // HTML
 gulp.task('move-html', function(){
   return gulp.src('index.html')
         .pipe(gulp.dest('./dist'));
 });
-gulp.task('process-html', ['process-scripts','move-html'], function(){
+
+gulp.task('process-html', ['process-scripts','move-html', 'copy-assets'], function(){
     return gulp.src('./dist/index.html')
     .pipe(inject(
       gulp.src(mainBowerFiles(), {read: false}),
@@ -31,7 +37,6 @@ gulp.task('process-html', ['process-scripts','move-html'], function(){
 });
 
 // Javascript
-//
 var appFiles = [
   'app/javascript/banks/Banks.js'
               ]

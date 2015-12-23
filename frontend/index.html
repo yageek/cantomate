@@ -13,7 +13,7 @@
   </head>
 
 
-  <script type="text/javascript">
+  <!-- <script type="text/javascript">
 
       function appStart(){
         var ROOT = 'http://localhost:8080/_ah/api';
@@ -29,38 +29,28 @@
         });
 }, ROOT);
       };
-  </script>
+  </script> -->
     <body ng-app="starterApp" layout="column">
 
-    <!-- Container #2 -->
     <div flex layout="row">
 
-        <!-- Container #3 -->
 
         <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" class="md-whiteframe-z2" md-component-id="left">
 
+          <header class="nav-header">
+            <img src="assets/svg/cantomate.svg" />
+            <h1>Cantomate</h1>
+          </header>
+
+
           <!-- User list #3 -->
-          <md-list>
 
-            <md-item ng-repeat="employee in employeeController.employees">
-              <md-button ng-click="employeeController.selectEmployee(employee)"ng-class="{'selected' : employee === employeeController.selected }">
-                  <md-icon md-svg-src="assets/svg/{{employee.avatar}}.svg" class="avatar"></md-icon>
-                  {{employee.name}}
-                </md-button>
-            </md-item>
-
-          </md-list>
-   
         </md-sidenav>
 
         <!-- Container #4 -->
         <md-content flex id="content">
           <!-- Container #1 (see wireframe) -->
          <md-toolbar layout="row">
-            <md-button class="menu" hide-gt-sm ng-click="employeeController.toggleUsersList()">
-              <md-icon md-svg-icon="menu" ></md-icon>
-            </md-button>
-            <h1>Cantomate</h1>
           </md-toolbar>
 
         </md-content>

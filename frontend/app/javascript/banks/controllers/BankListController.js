@@ -8,6 +8,6 @@
 
   function BankListController($log){
     var self = this;
-    self.banks = ['Bank1', 'Bank2'];
+    self.banks = ['Bank1', 'Bank2', 'Bank3'];
   };
 })();

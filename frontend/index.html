@@ -12,25 +12,7 @@
     <link rel="stylesheet" href="css/main.css"/>
   </head>
 
-
-  <script type="text/javascript">
-
-      function appStart(){
-        var ROOT = 'http://localhost:8080/_ah/api';
-        gapi.client.load('banks', 'v1', function() {
-
-        gapi.client.banks.list().then(function(response){
-
-
-            console.log("Response:", response.result);
-        }, function(reason){
-          console.console.log("Reason:", reason);
-
-        });
-}, ROOT);
-      };
-  </script>
-    <body ng-app="Cantomate" layout="column">
+    <body ng-app="cantomateApp" layout="column">
 
     <div flex layout="row">
 
@@ -41,7 +23,7 @@
             <img src="assets/svg/cantomate.svg" />
             <h1>Cantomate</h1>
           </header>
-  
+
         <!-- User list #3 -->
         </md-sidenav>
 
@@ -59,18 +41,7 @@
     <!-- bower:js -->
     <!-- endinject -->
 
-  <!-- Load App Logic -->
-  <script src="https://apis.google.com/js/client.js?onload=appStart"></script>
-  <script src="javascript/app.js"></script>
-
-
-  <script type="text/javascript">
-      angular
-          .module('starterApp', [ 'ngMaterial'])
-          .run(function($log){
-            $log.debug("startApp + ngMaterial running ");
-          });
-    </script>
-
+    <!-- Load App Logic -->
+    <script src="javascript/app.js"></script>
   </body>
 </html>

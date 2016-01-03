@@ -1,6 +1,6 @@
 (function(){
 
-	angular.module('Cantomate',['ngMaterial'])
+	angular.module('cantomateApp',['ngMaterial'])
   .controller('BankListController', ['$log',
   BankListController
 ]);

@@ -38,9 +38,7 @@ gulp.task('process-html', ['process-scripts','move-html', 'copy-assets'], functi
 
 // Javascript
 var appFiles = [
-  'app/javascript/banks/Banks.js',
-  'app/javascript/banks/services/BankService.js',
-  'app/javascript/banks/controllers/BankListController.js'
+  'app/javascript/banks/Cantomate.js'
 ];
 
 gulp.task('process-scripts', function(){

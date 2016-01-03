@@ -1,6 +1,4 @@
 (function(){
 
-	angular.module('Banks',['ngMaterial']);
-
-
+	angular.module('Cantomate',['ngMaterial']);
 })();

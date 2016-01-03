@@ -38,8 +38,10 @@ gulp.task('process-html', ['process-scripts','move-html', 'copy-assets'], functi
 
 // Javascript
 var appFiles = [
-  'app/javascript/banks/Banks.js'
-              ]
+  'app/javascript/banks/Banks.js',
+  'app/javascript/banks/BankListController.js'
+];
+
 gulp.task('process-scripts', function(){
     return gulp.src(appFiles)
           .pipe(concat('app.js'))
@@ -58,13 +60,13 @@ gulp.task('serve', function(){
 
 // Open browser
 gulp.task('open', function(){
-  gulp.src('./index.html')
+  gulp.src('./dist/index.html')
   .pipe(open({uri: 'http://localhost:8888'}));
 });
 
 gulp.task('watch', function(){
-    gulp.watch(['./*.html'], ['process-html']);
+    gulp.watch(['./*.html','./app/javascript/**/*.js'], ['process-html']);
     gulp.watch(['./sass/*.scss'], ['process-styles']);
 });
 
-gulp.task('default',['serve', 'process-html', 'watch', 'open']);
+gulp.task('default',['serve', 'process-html', 'process-styles', 'watch', 'open']);
